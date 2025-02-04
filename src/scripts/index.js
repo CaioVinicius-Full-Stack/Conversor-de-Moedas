@@ -7,6 +7,7 @@ const amount = document.getElementById("amount")
 const currency = document.getElementById("currency")
 const footer = document.querySelector("main footer")
 const description = document.getElementById("description")
+const result = document.getElementById("result")
 //  Manipulando o amount para receber apenas números
 
 amount.addEventListener("input", () => {
@@ -34,6 +35,16 @@ const convertCurrency = (amount, price, symbol) => {
   try {
     description.textContent = `${symbol} 1 = ${formatCurrencyBRL(price)}`
 
+    let total = amount * price
+
+    if (isNaN(total)) {
+
+      return alert("Digite apenas números")
+    }
+    total = formatCurrencyBRL(total).replace("R$", "")
+
+    result.textContent = `${total} Reais`
+
     footer.classList.add("show-result")
   } catch (error) {
     console.log(error)
@@ -42,7 +53,7 @@ const convertCurrency = (amount, price, symbol) => {
   }
 }
 
-const formatCurrencyBRL = (event) => {
+const formatCurrencyBRL = (value) => {
   return Number(value).toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
